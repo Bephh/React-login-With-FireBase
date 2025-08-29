@@ -1,10 +1,11 @@
+/* eslint-disable react-refresh/only-export-components */
 import  { useState, useEffect, createContext, useContext } from 'react';
 import  { auth } from '../firebase/config.js'; // Importe a configuração do Firebase
 
 // Criação do contexto de autenticação
 const AuthContext = createContext();
 
-// eslint-disable-next-line react/prop-types
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

@@ -1,20 +1,23 @@
-    
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,400;1,500&display=swap");
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Lora", sans-serif;
+  font-family: "Lora", serif;
 }
+
 body {
-  background-color: #de5d5d;
+  background-color: #f3f4f6; /* Fundo mais suave e claro */
+  color: #455a64; /* Cor de texto otimizada para leitura */
+  font-size: 16px; /* Tamanho de fonte base */
+  line-height: 1.6;
 }
 
 img {
   width: 100px;
   height: 100px;
-  box-shadow: 0px 4px 11px 0px rgb(0 0 0 / 14%);
+  box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
 #app {
@@ -28,7 +31,7 @@ img {
   position: absolute;
   width: 100%;
   height: 100vh;
-  background-color: rgb(159, 224, 242);
+  background-color: #e0f7fa; /* Cor suave */
   z-index: 999;
   display: flex;
   align-items: center;
@@ -40,6 +43,7 @@ img {
   width: 80px;
   height: 80px;
 }
+
 .full-page-loader .lds-dual-ring:after {
   content: " ";
   display: block;
@@ -47,10 +51,11 @@ img {
   height: 64px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid #bcbcbc;
-  border-color: #bcbcbc transparent #bcbcbc transparent;
+  border: 6px solid #b0bec5;
+  border-color: #b0bec5 transparent #b0bec5 transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
+
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);
@@ -60,27 +65,28 @@ img {
   }
 }
 
-/* form input */
-
+/* Estilos de formulário */
 input:not([type="checkbox"]), textarea {
-  border-color: #dfdfdf;
-  background-color: #e1cfbe;
-  color: #393939;
-  transition: border-color 0.2s ease-in-out;
+  border-color: #cfd8dc;
+  background-color: #eceff1;
+  color: #455a64;
   font-size: 16px;
   line-height: 22px;
   font-weight: normal;
-  font-style: normal;
-  height: 50px;
   padding: 0 20px;
+  height: 50px;
   max-width: 100%;
-  border-width: 1px;
-  border-style: solid;
-  appearance: none;
-  min-width: 100px;
-  width: 100%;
   border-radius: 25px;
   margin: 20px 0 0;
+  border-width: 1px;
+  border-style: solid;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus {
+  border-color: #607d8b;
+  outline: none;
 }
 
 textarea {
@@ -88,81 +94,83 @@ textarea {
   padding-top: 10px;
 }
 
+/* Adicionando transições suaves */
 .add-form {
   margin-top: 40px;
 }
 
-
 .form-control {
   margin: 20px 0;
 }
+
 .form-control label {
   display: block;
+  color: #607d8b;
+  font-size: 14px;
+  font-weight: 500;
 }
 
+/* Checkboxes */
 .form-control-check {
   display: flex;
   align-items: center;
 }
+
 .form-control-check label {
   flex: 1;
 }
+
 .form-control-check input {
   flex: 2;
   height: 20px;
 }
-.form-control input[type="checkbox"] {
-  width: auto;
-  flex: unset;
-  height: 20px;
+
+input[type="checkbox"] {
   margin-right: 20px;
 }
 
-input:focus {
-  border-color: #484c53;
-  outline: none;
-}
-
-/* button */
-
+/* Botões */
 .btn {
   display: inline-block;
-  color: #e32f2f;
+  color: #ffffff;
   border: none;
   padding: 10px 20px;
   margin: 5px;
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
-  font-size: 12px;
-  font-family: inherit;
+  font-size: 14px;
+  background-color: #ff7043; /* Laranja suave */
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #ff5722; /* Laranja mais intenso */
+}
+
+.btn:active {
+  transform: scale(0.98);
 }
 
 .btn:focus {
   outline: none;
 }
-.btn:active {
-  transform: scale(0.98);
-}
+
 .btn-block {
   display: block;
   width: 100%;
 }
 
-/* container */
-
 .container {
-  width: 1400px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 1200px;
   margin: auto;
-  overflow: auto;
-  min-height: 300px;
-  background-color: #f5ce59;
   padding: 30px;
   padding-top: 60px;
+  background-color: #ffecb3; /* Amarelo suave */
   border-radius: 5px;
+  box-shadow: 0px 4px 11px 0px rgba(0, 0, 0, 0.1);
   position: relative;
-  box-shadow: 0px 4px 11px 0px rgb(0 0 0 / 14%);
 }
 
 @media (max-width: 768px) {
@@ -174,6 +182,7 @@ input:focus {
 .container h1 {
   margin-bottom: 20px;
 }
+
 .container .header-btns {
   position: absolute;
   top: 0;
@@ -181,15 +190,8 @@ input:focus {
 }
 
 .container a.active button.btn,
-.container .btn.active    {
-  background: #2929d7;
-  color: #fff;
-}
-
-.container button.btn {
-  margin-top: 0;
-  background: #e3e3e3;
-  color: #000;
+.container .btn.active {
+  background: #00796b; /* Verde suave */
 }
 
 .container button.btn.transparent {
@@ -205,54 +207,43 @@ input:focus {
   margin-top: 50px;
 }
 
-/* table */
-
+/* Estilo de Tabela */
 table {
   border-spacing: 0;
   border-collapse: collapse;
   width: 100%;
-  margin-bottom: 30px;
-  width: 100%;
-  background-color: #ffd7b0;
-}
-table th,
-table td {
-  border-width: 0;
-  border-style: solid;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  padding: 13px 30px;
-}
-table tr:first-child td,
-table tr:first-child th {
-  border-top-width: 1px;
-  border-top-style: solid;
-}
-table tr td:first-child,
-table tr th:first-child {
-  border-left-width: 1px;
-  border-left-style: solid;
-}
-table tr td:last-child,
-table tr th:last-child {
-  border-right-width: 1px;
-  border-right-style: solid;
-}
-table.is-style-stripes {
-  border-width: 0;
-  border-style: solid;
-}
-table.is-style-stripes tr:nth-child(odd) {
-  background-color: transparent !important;
+  background-color: #fff9c4; /* Amarelo claro */
 }
 
-table tr td,
-table tr th {
+table th,
+table td {
   padding: 15px 30px;
-}
-table tr td,
-table tr th {
   text-align: left;
+  font-weight: 500;
+  color: #333;
+}
+
+table tr:nth-child(odd) {
+  background-color: #f9fbe7; /* Tabela com listras alternadas */
+}
+
+table tr:hover {
+  background-color: #f1f1f1; /* Destaque suave na linha */
+}
+
+table tr:first-child td,
+table tr:first-child th {
+  border-top: 1px solid #ff7043;
+}
+
+table tr td:first-child,
+table tr th:first-child {
+  border-left: 1px solid #cfd8dc;
+}
+
+table tr td:last-child,
+table tr th:last-child {
+  border-right: 1px solid #cfd8dc;
 }
 
 @media (max-width: 768px) {
@@ -267,7 +258,7 @@ table tr th {
   }
 }
 
-
+/* Página de login */
 .login-page {
   height: 100vh;
   display: flex;
@@ -281,11 +272,6 @@ table tr th {
 
 .login-page p {
   margin-bottom: 24px;
-}
-
-.login-page .login-type {
-  text-align: center;
-
 }
 
 .login-page .add-form.login {
@@ -307,16 +293,17 @@ table tr th {
   cursor: pointer;
 }
 
-.login-page.container button.btn.selected    {
-  background: #3e3e3e;
+.login-page.container button.btn.selected {
+  background: #0288d1; /* Azul suave */
   color: #fff;
 }
 
-.login-page.container button.btn.login    {
-  background: #3e3e3e;
+.login-page.container button.btn.login {
+  background: #0288d1; /* Azul suave */
   color: #fff;
 }
 
+/* Cabeçalho Moderno */
 .header {
   display: flex;
   justify-content: space-between;
@@ -325,36 +312,25 @@ table tr th {
 
 .user-info {
   display: flex;
-  align-items: right;
+  align-items: center;
 }
 
 .user-details {
   display: flex;
-  align-items: right;
+  align-items: center;
   margin-right: 10px;
-  font-size: 9px;
+  font-size: 14px;
+  color: #607d8b;
 }
 
-.btn {
-  background-color: #f04e4e;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background-color: #d94343;
-}
-
+/* Botão flutuante */
 .floating-button {
   position: fixed;
   bottom: 20px;
   right: 20px;
   width: 60px;
   height: 60px;
-  background-color: #0051ff; /* Azul ou a cor de sua preferência */
+  background-color: #00796b; /* Verde escuro */
   color: white;
   border-radius: 50%;
   display: flex;
@@ -362,12 +338,11 @@ table tr th {
   align-items: center;
   font-size: 24px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  text-decoration: none;
   z-index: 1000;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .floating-button:hover {
-  background-color: #0a1a8e; /* Cor ao passar o mouse */
+  background-color: #004d40; /* Verde mais escuro */
 }

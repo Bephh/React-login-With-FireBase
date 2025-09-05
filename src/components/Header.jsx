@@ -37,7 +37,7 @@ function Header({ pageTitle }) {
                                 />
                                 <span>{user.displayName}</span>
                             </div>
-                        ) : (
+                      ) : (
                             <div>
                                 <i className="fa fa-user"></i>
                                 <span>{user.email}</span>

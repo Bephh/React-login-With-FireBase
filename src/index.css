@@ -308,6 +308,13 @@ table tr th:last-child {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #54857d;
+  border-radius: 20px;
+}
+.fundo {
+  background-color: #54857d;
+  border-radius: 20px;
+  margin-top: 25px;
 }
 
 .user-info {

@@ -21,7 +21,7 @@ function MainPage() {
   return (
     <>
     <Header pageTitle={pageTitle}/>
-    <div>
+    <div className='fundo'>
       <h1>Página Principal</h1> <br />
       {user.displayName && <p>Nome: {user.displayName}</p>} <br />
       {user.photoURL && <img src={user.photoURL} alt="Foto do usuário" />} <br /> <br />

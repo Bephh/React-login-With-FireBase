@@ -22,18 +22,18 @@ function AuthContent() {
 
   return (
     <>
-      {user 
-      ? 
-      <Routes>
+      {user
+        ?
+        <Routes>
           <Route index element={<ContactList />} />
           <Route path="/user-prof" element={<UserProfileForm />} />
-          <Route path="/add-cont"  element={<AddContactPage />} />
-                  
-          <Route path="/chat/:id"  element={<Chat />} />     
+          <Route path="/add-cont" element={<AddContactPage />} />
+          <Route path="/chat/:id" element={<Chat />} />
+          <Route path="/edit-cont/:id" element={<AddContactPage />} />
 
-      </Routes>      
-      
-      : <LoginPage />}
+        </Routes>
+
+        : <LoginPage />}
     </>
   );
 }

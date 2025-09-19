@@ -1,8 +1,12 @@
+/* eslint-disable react/prop-types */
 import './ContactItem.css';
 
+// eslint-disable-next-line react/prop-types
 const ContactItem = ({ user, onEdit, onDelete }) => {
+  const isInvalidUser = !user.contactUserId;
+
   return (
-    <div className="user-item">
+    <div className={`user-item ${isInvalidUser ? 'invalid-contact' : ''}`}>
       <img src={user.photo} alt={user.fullName} className="user-photo" />
       <div className="user-info">
         <h3 className="user-name">{user.fullName}</h3>
@@ -17,4 +21,7 @@ const ContactItem = ({ user, onEdit, onDelete }) => {
 };
 
 export default ContactItem;
+
+
+
 

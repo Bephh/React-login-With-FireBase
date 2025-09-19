@@ -5,6 +5,7 @@ import { collection, query, where, orderBy, addDoc, serverTimestamp, onSnapshot,
 import Header from '../components/Header';
 // import './Chat.css'
 
+
 const Chat = () => {
   const { id } = useParams();
   const [messages, setMessages] = useState([]);
@@ -13,89 +14,99 @@ const Chat = () => {
   const myUserId =  auth.currentUser.uid 
 
   useEffect(() => {
-	// Buscar informações do contato
-	const fetchContact = async () => {
-	  try {
-		const contactRef = doc(db, 'contacts', id);
-		const contactSnap = await getDoc(contactRef);
-		if (contactSnap.exists()) {
-		  setContact(contactSnap.data());
-		}
-	  } catch (error) {
-		console.error("Erro ao buscar contato:", error);
-	  }
-	};
-
-	// Buscar mensagens em tempo real
-	const fetchMessages = () => {
-	  const messagesRef = collection(db, 'messages');
-	  const q = query(messagesRef, where('contactId', '==', id), orderBy('timestamp', 'asc'));
-
-	  return onSnapshot(q, (snapshot) => {
-		const messagesList = snapshot.docs.map(doc => ({
-		  id: doc.id,
-		  ...doc.data()
-		}));
-		setMessages(messagesList);
-	  });
-	};
-
-	fetchContact();
-	const unsubscribe = fetchMessages();
-
-	return () => unsubscribe(); // Limpa o listener ao desmontar
+    const fetchContact = async () => {
+      try {
+        const contactRef = doc(db, 'contacts', id);
+        const contactSnap = await getDoc(contactRef);
+        if (contactSnap.exists()) {
+          setContact(contactSnap.data());
+        }
+      } catch (error) {
+        console.error("Erro ao buscar contato:", error);
+      }
+    };
+  
+    fetchContact();
   }, [id]);
 
-  const handleSendMessage = async () => {
-	if (newMessage.trim() === '') return;
+  useEffect(() => {
+    if (!contact || !contact.contactUserId || !myUserId) return;
+  
+    const chatKey = [myUserId, contact.contactUserId].sort().join('_');
+    const messagesRef = collection(db, 'messages');
+    const q = query(messagesRef, where('chatKey', '==', chatKey), orderBy('timestamp', 'asc'));
+  
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const messagesList = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setMessages(messagesList);
+    });
+  
+    return () => unsubscribe();
+  }, [contact, myUserId]);
 
-	try {
-	  await addDoc(collection(db, 'messages'), {
-		contactId: id,
-		senderId: myUserId,
-		text: newMessage,
-		timestamp: serverTimestamp()
-	  });
-	  setNewMessage('');
-	} catch (error) {
-	  console.error("Erro ao enviar mensagem:", error);
-	}
+  const handleSendMessage = async () => {
+    if (newMessage.trim() === '' || !contact || !contact.contactUserId) return;
+    const chatKey = [myUserId, contact.contactUserId].sort().join('_');
+
+    try {
+      await addDoc(collection(db, 'messages'), {
+        contactId: id,
+        senderId: myUserId,
+        chatKey,
+
+        text: newMessage,
+        timestamp: serverTimestamp()
+      });
+      setNewMessage('');
+    } catch (error) {
+      console.error("Erro ao enviar mensagem:", error);
+    }
   };
 
   return (
-	<>
-	  <Header pageTitle='💬 Conversa' />
-	  
-	  {contact && (
-		<div className="chat-header">
-		  <img src={contact.photo} alt={contact.fullName} className="contact-photo" />
-		  <div className="contact-info">
-			<h3>{contact.fullName}</h3>
-			<p>{contact.phone}</p>
-		  </div>
-		</div>
-	  )}
+    <>
+      <Header pageTitle='💬 Conversa' />
+      
+      {contact && (
+        <div className="chat-header">
+          <img src={contact.photo} alt={contact.fullName} className="contact-photo" />
+          <div className="contact-info">
+            <h3>{contact.fullName}</h3>
+            <p>{contact.phone}</p>
+          </div>
+        </div>
+      )}
 
-	  <div className="chat-container">
-		<div className="chat-messages">
-		  {messages.map(msg => (
-			<div key={msg.id} className={`chat-message ${msg.senderId === myUserId ? 'sent' : 'received'}`}>
-			  <p>{msg.text}</p>
-			</div>
-		  ))}
-		</div>
+      <div className="chat-container">
+        <div className="chat-messages">
+          {messages.map(msg => (
+            <div key={msg.id} className={`chat-message ${msg.senderId === myUserId ? 'sent' : 'received'}`}>
+              <p>{msg.text}</p>
+            </div>
+          ))}
+        </div>
 
-		<div className="chat-input">
-		  <input 
-			type="text" 
-			value={newMessage} 
-			onChange={(e) => setNewMessage(e.target.value)} 
-			placeholder="Digite uma mensagem..."
-		  />
-		  <button onClick={handleSendMessage}>Enviar</button>
-		</div>
-	  </div>
-	</>
+        <form 
+          onSubmit={(e) => {
+            e.preventDefault(); // Evita o recarregamento da página
+            handleSendMessage();
+          }} 
+          className="chat-input"
+         >
+          <input 
+            type="text" 
+            value={newMessage} 
+            onChange={(e) => setNewMessage(e.target.value)} 
+            placeholder="Digite uma mensagem..."
+          />
+          <button type="submit">Enviar</button>
+        </form>
+
+      </div>
+    </>
   );
 };
 
